@@ -1,5 +1,6 @@
 version: '3'
 services:
+  #Deploying our containerized application
   # my-app:
     # image: ${docker-registry}/my-app:1.0
     # ports:

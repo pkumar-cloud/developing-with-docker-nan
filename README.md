@@ -48,7 +48,8 @@ Step 7: Access you nodejs application UI from browser
 Step 1: start mongodb and mongo-express
 
     docker-compose -f docker-compose.yaml up
-    
+    docker-compose -f docker-compose.yaml down
+
 _You can access the mongo-express under localhost:8080 from your browser_
     
 Step 2: in mongo-express UI - create a new database "my-db"
@@ -65,8 +66,27 @@ Step 5: access the nodejs application from browser
 
     http://localhost:3000
 
-#### To build a docker image from the application
+#### Build a docker image from the application
 
-    docker build -t my-app:1.0 .       
+    docker build -t my-app:1.0 .   
+    docker run my-app:1.0    
     
 The dot "." at the end of the command denotes location of the Dockerfile.
+
+#### Deploying our containerized application on server
+Create private Docker Registry on Amazon ECR
+Log into private registry (Copy command from ECR)
+Tag Docker Image using -> ECRregistryDomain/imageName:tag 
+```
+docker tag my-app:1.0 ECRregistryDomain/my-app:1.0
+```
+Push Docker Image to AWS ECR repository
+```
+docker push ECRregistryDomain/my-app:1.0
+```
+Add our example application to Dockerfile
+Change mongodb server url from localhost to mongodb service name in Node Code
+Start docker containers with docker-compose
+```
+docker-compose -f docker-compose.yaml up
+```
